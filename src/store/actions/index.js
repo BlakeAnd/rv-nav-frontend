@@ -16,9 +16,9 @@ export const DUPLICATE_EMAIL = "DUPLICATE_EMAIL";
 export const  LOGOUT = " LOGOUT";
 
 //variables for the base url string so we can easily switch from local to deployed
-let deployed =  "https://labs-rv-life-staging-1.herokuapp.com";
+let deployed =  "https://rvnav-backend.herokuapp.com/";
 let local = "http://localhost:5000";
-let url_val = local;
+let url_val = deployed;
  
 export function authError(error) {
  return { type: "AUTH_ERROR", payload: error };
