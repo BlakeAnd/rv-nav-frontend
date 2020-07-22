@@ -15,6 +15,11 @@ export const DUPLICATE_USER = "DUPLICATE_USER";
 export const DUPLICATE_EMAIL = "DUPLICATE_EMAIL";
 export const  LOGOUT = " LOGOUT";
 
+//variables for the base url string so we can easily switch from local to deployed
+let deployed =  "https://labs-rv-life-staging-1.herokuapp.com";
+let local = "http://localhost:5000";
+let url_val = local;
+ 
 export function authError(error) {
  return { type: "AUTH_ERROR", payload: error };
 }
@@ -29,7 +34,7 @@ export const register = creds => {
     dispatch({ type: LOADING });
     return axios
       .post(
-        "https://labs-rv-life-staging-1.herokuapp.com/users/register",
+        `${url_val}/users/register`,
         creds
       )
       .then(response => {
@@ -63,7 +68,7 @@ export const register = creds => {
   return dispatch => {
     dispatch({ type: LOADING });
     return axios
-      .post("https://labs-rv-life-staging-1.herokuapp.com/users/login", values)
+      .post(`${url_val}/users/login`, values)
       .then(res => {
         console.log(res); // data was created successfully and logs to console
         localStorage.setItem("token", res.data.token);
@@ -95,7 +100,7 @@ export const addVehicle = value => {
   return dispatch => {
     dispatch({ type: LOADING });
     return axios
-      .post('https://labs-rv-life-staging-1.herokuapp.com/vehicle', value,
+      .post(`${url_val}/vehicle`, value,
       {headers: { Authorization: localStorage.getItem("token") }, 'Content-Type': 'application/json'})
       .then(res => {
         console.log("add vehicle res", res); // data was created successfully and logs to console
@@ -114,7 +119,7 @@ export const getVehicles = () => {
   return dispatch => {
     dispatch({ type: LOADING });
     return axios
-      .get('https://labs-rv-life-staging-1.herokuapp.com/vehicle',
+      .get(`${url_val}/vehicle`,
       {headers: { Authorization: localStorage.getItem("token") }, 'Content-Type': 'application/json'})
       .then(res => {
         console.log("get vehicle res", res); // data was created successfully and logs to console
@@ -138,7 +143,7 @@ export const updateVehicle = (value, id) => {
   return dispatch => {
     dispatch({ type: LOADING });
     return axios
-      .put(`https://labs-rv-life-staging-1.herokuapp.com/vehicle/${id}`, value,
+      .put(`${url_val}/vehicle/${id}`, value,
       {headers: { Authorization: localStorage.getItem("token") }, 'Content-Type': 'application/json'})
       .then(res => {
         console.log("update res", res); // data was created successfully and logs to console
@@ -146,7 +151,7 @@ export const updateVehicle = (value, id) => {
         // dispatch({ type: UPDATE_VEHICLE, payload: {value, id} });
         dispatch({ type: LOADING });
         return axios
-          .get('https://labs-rv-life-staging-1.herokuapp.com/vehicle',
+          .get(`${url_val}/vehicle`,
             { headers: { Authorization: localStorage.getItem("token") }, 'Content-Type': 'application/json' })
           .then(res => {
             console.log("get vehicle res", res); // data was created successfully and logs to console
@@ -175,10 +180,10 @@ export const deleteVehicles = (id) => {
   return dispatch => {
     dispatch({ type: LOADING });
     return axios
-      .delete(`https://labs-rv-life-staging-1.herokuapp.com/vehicle/${id}`,
+      .delete(`${url_val}/vehicle/${id}`,
       {headers: { Authorization: localStorage.getItem("token") }, 'Content-Type': 'application/json'})
       .then(res => {
-        console.log("de;lete res", res); // data was created successfully and logs to console
+        console.log("delete res", res); // data was created successfully and logs to console
         
         dispatch({ type: DELETE_VEHICLE, payload: id });
         return true;
